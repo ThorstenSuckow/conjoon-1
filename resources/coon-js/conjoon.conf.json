@@ -1,11 +1,43 @@
 {
-  "conjoon" : {
-    "config" : {
-      "application" : {
-        "plugins" : [
-          "extjs-plug-themeutil"
-        ]
-      }
+    "conjoon": {
+        "services": {
+            "coon.core.service.UserImageService": {
+                "xclass": "coon.core.service.GravatarService",
+                "args":   [{
+                    "parameters" :  {"d":  "blank"}
+                }]
+            }
+        },
+        "plugins": {
+            "application": [
+                "extjs-plug-themeutil",
+                "conjoon.plugin.TitleChangePlugin"
+            ],
+            "components": [
+                {
+                    "cmp": "cn_navport-tbar",
+                    "pclass": "conjoon.theme.material.plugin.ModeSwitchPlugin",
+                    "event": "beforerender"
+                },
+                {
+                    "cmp": "cn_navport-conctr",
+                    "pclass": "conjoon.plugin.WorkbenchQuotes",
+                    "event": "afterrender",
+                    "args": [
+                        {
+                            "template": "./resources/templates/html/workbench_quotes.html.tpl",
+                            "url": "./resources/json/workbench_quotes.list.json"
+                        }
+                    ]
+                }
+            ]
+        },
+        "application": {
+            "title": "conjoon demo",
+            "announcement": {
+                "message": "Thank you for using conjoon. Leave a ⭐ at <a target=\"_blank\" href=\"https://github.com/conjoon/conjoon\">Github</a> if you like it!",
+                "type": "success"
+            }
+        }
     }
-  }
 }

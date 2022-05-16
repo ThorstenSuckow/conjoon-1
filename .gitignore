@@ -5,3 +5,8 @@
 /.idea
 *.env
 /package.dev.json
+/package.prod.json
+/*.log
+/tests.redirect.html
+/.extjs-link.conf.json
+/buildtest/
