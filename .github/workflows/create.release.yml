@@ -25,9 +25,8 @@ jobs:
       - name: Build Ext JS & zip build    
         run: | 
           npm run build
-          cd ./build/production/conjoon/ && zip -r ./release.zip ./*
-          mv ./release.zip /release.zip
-          cd /
+          cd ./build/production/conjoon/ && zip -r ../../../release.zip ./*
+  
           
       - name: Create Release   
         id: create_release
