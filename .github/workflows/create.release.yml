@@ -13,7 +13,7 @@ jobs:
         node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: npm (Node.js ${{ matrix.node-version }})
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
@@ -22,10 +22,10 @@ jobs:
           npm config set @sencha:registry https://npm.sencha.com/
           npm config set //npm.sencha.com/:_authToken=${{ secrets.SENCHA_ACCESS_TOKEN }}
           npm ci --save-dev
-      - name: Build Ext JS & Zip    
+      - name: Build Ext JS & zip build    
         run: | 
           npm run build
-          zip -r ./release.zip ./build/production/conjoon/*
+          cd ./build/production/conjoon/ && zip -r ./release.zip ./*
             
       - name: Create Release   
         id: create_release
@@ -45,6 +45,6 @@ jobs:
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./release.zip
-          asset_name: conjoon.zip
+          asset_name: conjoon.build.${{ github.ref }}.zip
           asset_content_type: application/zip
           
