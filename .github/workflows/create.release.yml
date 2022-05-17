@@ -7,7 +7,7 @@ on:
 name: Create Release
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -23,17 +23,15 @@ jobs:
           npm config set @sencha:registry https://npm.sencha.com/
           npm config set //npm.sencha.com/:_authToken=${{ secrets.SENCHA_ACCESS_TOKEN }}
           npm ci --save-dev
-          npm run build --if-present
+      - name: Build Ext JS & Zip    
+      - run: | 
+          npm run build
           zip -r release.zip ./build/production/conjoon
-
-  build:
-    needs: test
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      
       - name: Create Release
+        uses: actions/checkout@v2
+      
+      - name: Create Assets   
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -43,6 +41,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false    
+      
       - name: Upload assets
         uses: actions/upload-release-asset@v1
         env:
