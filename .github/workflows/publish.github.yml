@@ -19,6 +19,11 @@ jobs:
           node-version: 16
           registry-url: 'https://npm.pkg.github.com'
           scope: '@conjoon'
+      - name: Building dist
+        run: |
+          npm config set @sencha:registry https://npm.sencha.com/
+          npm config set //npm.sencha.com/:_authToken=${{ secrets.SENCHA_ACCESS_TOKEN }}
+          npm ci --save-dev        
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
