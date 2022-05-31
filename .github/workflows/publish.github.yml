@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 16
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@conjoon'
+          scope: '@ThorstenSuckow'
       - name: Building dist
         run: |
           npm config set @sencha:registry https://npm.sencha.com/
