@@ -25,6 +25,10 @@ jobs:
           npm config set //npm.sencha.com/:_authToken=${{ secrets.SENCHA_ACCESS_TOKEN }}
           npm ci --save-dev  
           npm run build
-      - run: npm publish
+      - run: |
+          npm config set //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+          npm config set @ThorstenSuckow:registry=https://npm.pkg.github.com
+          npm config set always-auth=true
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
