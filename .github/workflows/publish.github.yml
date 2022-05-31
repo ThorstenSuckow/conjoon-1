@@ -14,20 +14,16 @@ jobs:
       packages: write 
     steps:
       - uses: actions/checkout@v2
+      - name: Building dist
+        run: |
+          npm config set @sencha:registry https://npm.sencha.com/
+          npm config set //npm.sencha.com/:_authToken=${{ secrets.SENCHA_ACCESS_TOKEN }}
       - uses: actions/setup-node@v2
         with:
           node-version: 16
           registry-url: 'https://npm.pkg.github.com'
           scope: '@ThorstenSuckow'
-      - name: Building dist
-        run: |
-          npm config set @sencha:registry https://npm.sencha.com/
-          npm config set //npm.sencha.com/:_authToken=${{ secrets.SENCHA_ACCESS_TOKEN }}
       - name: Publish
-        run: |
-          npm config set //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-          npm config set @ThorstenSuckow:registry=https://npm.pkg.github.com
-          npm config set always-auth=true
-          npm publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
